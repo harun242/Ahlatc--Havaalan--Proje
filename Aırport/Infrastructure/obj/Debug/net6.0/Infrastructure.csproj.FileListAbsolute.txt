@@ -1,0 +1,12 @@
+C:\Aırport Ders\Aırport\Infrastructure\bin\Debug\net6.0\Infrastructure.deps.json
+C:\Aırport Ders\Aırport\Infrastructure\bin\Debug\net6.0\Infrastructure.dll
+C:\Aırport Ders\Aırport\Infrastructure\bin\Debug\net6.0\Infrastructure.pdb
+C:\Aırport Ders\Aırport\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.AssemblyReference.cache
+C:\Aırport Ders\Aırport\Infrastructure\obj\Debug\net6.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Aırport Ders\Aırport\Infrastructure\obj\Debug\net6.0\Infrastructure.AssemblyInfoInputs.cache
+C:\Aırport Ders\Aırport\Infrastructure\obj\Debug\net6.0\Infrastructure.AssemblyInfo.cs
+C:\Aırport Ders\Aırport\Infrastructure\obj\Debug\net6.0\Infrastructure.csproj.CoreCompileInputs.cache
+C:\Aırport Ders\Aırport\Infrastructure\obj\Debug\net6.0\Infrastructure.dll
+C:\Aırport Ders\Aırport\Infrastructure\obj\Debug\net6.0\refint\Infrastructure.dll
+C:\Aırport Ders\Aırport\Infrastructure\obj\Debug\net6.0\Infrastructure.pdb
+C:\Aırport Ders\Aırport\Infrastructure\obj\Debug\net6.0\ref\Infrastructure.dll

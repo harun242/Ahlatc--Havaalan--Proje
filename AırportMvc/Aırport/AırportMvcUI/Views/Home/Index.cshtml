@@ -1,0 +1,102 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+	<div id="booking" class="section">
+	<div class="text-right"><a type="button" class="btn btn-success btn-lg" href="/adminpanel">Admin Giriş </a></div>
+		<div class="section-center">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="booking-cta">
+						<h1>Dünyayı Keşfetmeye Hazır Olun</h1>
+							<p></p>
+						</div>
+					</div>
+					<div class="col-md-7 col-md-offset-1">
+						<div class="booking-form">
+							<form>
+								<div class="form-group">
+									<div class="form-checkbox">
+										<label for="roundtrip">
+											<input type="radio" id="roundtrip" name="flight-type">
+										    <span></span>Tek Yön
+										</label>
+										<label for="one-way">
+											<input type="radio" id="one-way" name="flight-type">
+											<span></span>Gidiş-Dönüş
+
+										</label>
+										<label for="multi-city">
+											<input type="radio" id="multi-city" name="flight-type">
+											<span></span>Çoklu Uçuş
+										</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+									<img src="home/img/nereden.png" width=" 50" height="30" />
+										<div class="form-group">								
+											<span class="form-label">Nereden</span>
+											<input class="form-control" type="text" placeholder="City or airport">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<img src="home/img/nereye.png" width="60" height="30"/>
+										<div class="form-group">										
+											<span class="form-label">Nereye</span>
+											<input class="form-control" type="text" placeholder="City or airport">
+										</div>
+									</div>
+								</div>
+								@*<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<span class="form-label">Departing</span>
+											<input class="form-control" type="date" required>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<span class="form-label">Returning</span>
+											<input class="form-control" type="date" required>
+										</div>
+									</div>
+								</div>*@
+								<div class="row">									
+									<div class="col-md-6">
+										<div class="form-group">
+											<span class="form-label">Yolcu Sayısı</span>
+											<select class="form-control">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+											    <option>4</option>
+											    <option>5</option>
+											</select>
+											<span class="select-arrow"></span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<span class="form-label">Sınıf</span>
+											<select class="form-control">
+												<option>Ekonomi</option>
+												<option>Business</option>
+												<option>Confort</option>
+											</select>
+											<span class="select-arrow"></span>
+										</div>
+									</div>
+								</div>
+								<div class="form-btn">
+									<button class="submit-btn">Uçuşları Göster</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

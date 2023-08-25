@@ -1,0 +1,17 @@
+C:\Aırport Ders\Aırport\WS.DataAccess\bin\Debug\net6.0\WS.DataAccess.deps.json
+C:\Aırport Ders\Aırport\WS.DataAccess\bin\Debug\net6.0\WS.DataAccess.dll
+C:\Aırport Ders\Aırport\WS.DataAccess\bin\Debug\net6.0\WS.DataAccess.pdb
+C:\Aırport Ders\Aırport\WS.DataAccess\bin\Debug\net6.0\Infrastructure.dll
+C:\Aırport Ders\Aırport\WS.DataAccess\bin\Debug\net6.0\WS.Model.dll
+C:\Aırport Ders\Aırport\WS.DataAccess\bin\Debug\net6.0\Infrastructure.pdb
+C:\Aırport Ders\Aırport\WS.DataAccess\bin\Debug\net6.0\WS.Model.pdb
+C:\Aırport Ders\Aırport\WS.DataAccess\obj\Debug\net6.0\WS.DataAccess.csproj.AssemblyReference.cache
+C:\Aırport Ders\Aırport\WS.DataAccess\obj\Debug\net6.0\WS.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Aırport Ders\Aırport\WS.DataAccess\obj\Debug\net6.0\WS.DataAccess.AssemblyInfoInputs.cache
+C:\Aırport Ders\Aırport\WS.DataAccess\obj\Debug\net6.0\WS.DataAccess.AssemblyInfo.cs
+C:\Aırport Ders\Aırport\WS.DataAccess\obj\Debug\net6.0\WS.DataAccess.csproj.CoreCompileInputs.cache
+C:\Aırport Ders\Aırport\WS.DataAccess\obj\Debug\net6.0\WS.DataAccess.csproj.CopyComplete
+C:\Aırport Ders\Aırport\WS.DataAccess\obj\Debug\net6.0\WS.DataAccess.dll
+C:\Aırport Ders\Aırport\WS.DataAccess\obj\Debug\net6.0\refint\WS.DataAccess.dll
+C:\Aırport Ders\Aırport\WS.DataAccess\obj\Debug\net6.0\WS.DataAccess.pdb
+C:\Aırport Ders\Aırport\WS.DataAccess\obj\Debug\net6.0\ref\WS.DataAccess.dll

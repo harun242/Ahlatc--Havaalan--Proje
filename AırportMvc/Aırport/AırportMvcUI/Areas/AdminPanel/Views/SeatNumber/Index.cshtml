@@ -1,0 +1,356 @@
+﻿@using AırportMvcUI.Areas.AdminPanel.Models.ApiTypes;
+
+@{
+    Layout = "~/Areas/AdminPanel/Views/Shared/_Layout.cshtml";
+}
+
+@model List<SeatNumberItem>
+
+@section customStyles{
+    <link rel="stylesheet" href="~/adminPanel/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/adminPanel/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/adminPanel/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+    <link rel="stylesheet" href="~/adminPanel/plugins/sweetalert2/sweetalert2.css">
+}
+
+@section customScripts{
+    <script src="~/adminPanel/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/adminPanel/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/adminPanel/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/adminPanel/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/adminPanel/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/adminPanel/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/adminPanel/plugins/jszip/jszip.min.js"></script>
+    <script src="~/adminPanel/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/adminPanel/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/adminPanel/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/adminPanel/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/adminPanel/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+    <script src="~/adminPanel/plugins/sweetalert2/sweetalert2.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#example1").DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json',
+                },
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["excel", "pdf"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+            $("#btnSave").click(function () {
+                var formData = new FormData();
+
+
+                formData.append("BoardingCity", $("#txtBoardingCity").val());
+                formData.append("LandedCity", $("#txtLandedCity").val());
+                formData.append("TicketNumber", $("#txtTicketNumber").val());
+
+
+                $.ajax({
+                    url: "/AdminPanel/SeatNumber/Save",
+                    method: "post",
+                    datatype: "json",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.isSuccess) {
+                            //alert("İşlem Başarılı " + response.message);
+                            Swal.fire(
+                                'İşlem Başarılı',
+                                response.message,
+                                'success'
+                            )
+                        }
+                        else {
+                            //alert("İşlem Başarısız " + response.message);
+
+                            Swal.fire(
+                                'İşlem Başarısız',
+                                response.message,
+                                'error'
+                            )
+                        }
+                    }
+                });
+            });
+
+
+            $(".btnDelete").click(function () {
+                var expeditionID = $(this).attr("seatnumberid");
+
+                var tr = $(this).parent().parent();
+
+                Swal.fire({
+                    title: 'Silmek İstiyor musunuz?',
+                    text: "Bu işlem geri alınamaz!!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Evet Sil!',
+                    cancelButtonText: 'Vazgeç'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "/AdminPanel/SeatNumber/Delete/" + expeditionID,
+                            method: "post",
+                            datatype: "json",
+                            success: function (response) {
+                                if (response.isSuccess) {
+                                    Swal.fire({
+                                        title: 'İşlem Başarılı',
+                                        text: response.message,
+                                        icon: 'success',
+                                        showCancelButton: false,
+                                        confirmButtonText: 'Tamam'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            // bu komut sayfayı yenilemek için:
+                                            //window.location.reload();
+
+                                            // yukarıdaki gibi sayfayı reload edip tüm datayı yenidençekmektense, clientdaki html de ilgili satırı bulup silme yoluna da gidebiliriz :
+
+                                            $(tr).fadeOut(2500, function () {
+                                                $(tr).remove();
+                                            });
+
+                                        }
+                                    });
+                                }
+                                else {
+                                    Swal.fire(
+                                        'İşlem Başarısız',
+                                        response.message,
+                                        'error'
+                                    );
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        Swal.fire(
+                            'İşlem İptal Edildi',
+                            'Silme işlemi isteğiniz üzerine iptal edilmiştir',
+                            'warning'
+                        )
+                    }
+                })
+            });
+
+
+            $(".btnEdit").click(function () {
+                var ExpeditionID = $(this).attr("seatnumberid");
+
+                $.ajax({
+                    url: "/AdminPanel/SeatNumber/GetSeatNumber/" + ExpeditionID,
+                    method: "post",
+                    datatype: "json",
+                    success: function (response) {
+                        $("#txtBoardingCityEdit").val(response.boardingCity);
+                        $("#txtLandedCityEdit").val(response.landedCity);
+                        $("#txtTicketNumberEdit").val(response.ticketNumber);
+                        $("#hfSeatNumberId").val(response.ExpeditionID);
+
+                    }
+                });
+
+                $("#divEditSeatNumber").modal("show");
+
+
+                $("#btnEdit").click(function () {
+                    var formData = new FormData();
+                    var ExpeditionID = $("#hfSeatNumberId").val();
+
+                    formData.append("ExpeditionID", ExpeditionID);
+                    formData.append("BoardingCity", $("#txtBoardingCityEdit").val());
+                    formData.append("LandedCity", $("#txtLandedCityEdit").val());
+                    formData.append("TicketNumber", $("#txtTicketNumberEdit").val());
+
+
+                    $.ajax({
+                        url: "/AdminPanel/SeatNumber/Update",
+                        method: "post",
+                        datatype: "json",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            if (response.isSuccess) {
+                                $("#divEditSeatNumber").modal("hide");
+
+                                Swal.fire(
+                                    'İşlem Başarılı',
+                                    response.message,
+                                    'success'
+                                );
+                            }
+                            else {
+
+                                Swal.fire(
+                                    'İşlem Başarısız',
+                                    response.message,
+                                    'error'
+                                );
+                            }
+                        }
+                    });
+                });
+            });
+
+        });
+    </script>
+}
+
+      
+
+
+<div class="row">
+    <div class="col-12">
+        <!-- Custom Tabs -->
+        <div class="card">
+            <div class="card-header d-flex p-0">
+                <h3 class="card-title p-3">Koltuk Numarası Yönetim</h3>
+                <ul class="nav nav-pills ml-auto p-2">
+                    <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Liste</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Yeni</a></li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+
+
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Biniş Şehri</th>
+                                    <th>Kalkış Şehri</th>
+                                    <th>Bilet Numarası</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.BoardingCity</td>
+                                        <td>@item.LandedCity</td>
+                                        <td>@item.TicketNumber</td>
+
+                                        <td>
+                                            <button type="button" class="btn btn-warning btnEdit"
+                                                    seatnumberid="@item.ExpeditionID">
+                                                Düzenle
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btnDelete"
+                                                    seatnumberid="@item.ExpeditionID">
+                                                Sil
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                                
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Biniş Şehri</th>
+                                    <th>Kalkış Şehri</th>
+                                    <th>Bilet Numarası</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+
+
+                    </div>
+                    <div class="tab-pane" id="tab_2">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Yeni Koltuk Numarası Kayıt Formu</h3>
+                            </div>
+                            <form>                             
+                                <div class="card-body">
+
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label>Biniş Şehri</label>
+                                            <input type="text" class="form-control" id="txtBoardingCity" placeholder="Kategori Adı">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Kalkış Şehri</label>
+                                            <input type="text" class="form-control" id="txtLandedCity" placeholder="Kategori Adı">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Bilet Numarası</label>
+                                            <input type="text" class="form-control" id="txtTicketNumber" placeholder="Kategori Adı">
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button id="btnSave" type="button" class="btn btn-primary">Kaydet</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="modal fade" data-backdrop="static" id="divEditSeatNumber" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Koltuk Numarası Düzenleme Formu</h3>
+                    </div>
+                    <form>
+                        <input type="hidden" id="hfSeatNumberId" />
+
+                        <div class="card-body">
+
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Biniş Şehri</label>
+                                    <input type="text" class="form-control" id="txtBoardingCityEdit" placeholder="Biniş Şehri">
+                                </div>
+                                <div class="form-group">
+                                    <label>Kalkış Şehri</label>
+                                    <input type="text" class="form-control" id="txtLandedCityEdit" placeholder="Kalkış Şehri">
+                                </div>
+                                <div class="form-group">
+                                    <label>Bilet Numarası</label>
+                                    <input type="text" class="form-control" id="txtTicketNumberEdit" placeholder="Bilet Numarası">
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button id="btnEdit" type="button" class="btn btn-primary">Kaydet</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
